@@ -19,7 +19,7 @@ export const Api = ({
 	app.use(cors(corsOptions));
 
 	app.get("/", (_, res) => {
-		res.send(publicContent);
+		res.send(realm.getClientsIds);
 	});
 
 	app.use("/:key", PublicApi({ config, realm }));
