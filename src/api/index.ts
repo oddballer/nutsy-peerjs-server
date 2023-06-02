@@ -18,8 +18,18 @@ export const Api = ({
 
 	app.use(cors(corsOptions));
 
-	app.get("/", (_, res) => {
-		res.send(realm.getClientsIds);
+	// app.get("/", (_, res) => {
+	// 	res.send(publicContent);
+	// });
+
+	app.get("/", (_, res: express.Response) => {
+		if (config.allow_discovery) {
+			const clientsIds = realm.getClientsIds();
+
+			return res.send(clientsIds);
+		}
+
+		return res.sendStatus(401);
 	});
 
 	app.use("/:key", PublicApi({ config, realm }));
